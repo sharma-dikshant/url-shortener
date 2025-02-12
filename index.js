@@ -20,23 +20,23 @@ connectToDB("mongodb://127.0.0.1:27017/url-shortener")
 app.use(express.json());
 app.use("/url", urlRouter);
 
-//dynamic route for redirect
-app.get("/:shortId", async (req, res) => {
-  const shortId = req.params.shortId;
-  console.log(shortId);
-  const entry = await URL.findOneAndUpdate(
-    {
-      shortId,
-    },
-    {
-      $push: {
-        visitedHistory: { timestamp: Date.now() },
-      },
-    }
-  );
-  console.log(entry);
-  res.redirect(entry.redirectURL);
-});
+// //dynamic route for redirect
+// app.get("/:shortId", async (req, res) => {
+//   const shortId = req.params.shortId;
+//   console.log(shortId);
+//   const entry = await URL.findOneAndUpdate(
+//     {
+//       shortId,
+//     },
+//     {
+//       $push: {
+//         visitedHistory: { timestamp: Date.now() },
+//       },
+//     }
+//   );
+//   console.log(entry);
+//   res.redirect(entry.redirectURL);
+// });
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
