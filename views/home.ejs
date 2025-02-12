@@ -7,6 +7,20 @@
   </head>
   <body>
     <h1>Welcome to URL shortener</h1>
-    
+    <div>
+      <form method="post" action="/url">
+        <label>Enter your website Link</label>
+        <input
+          type="text"
+          name="url"
+          id="url"
+          placeholder="https://www.example.com"
+        />
+        <button type="submit">Generate</button>
+        <% if (locals.shortUrl) { %>
+        <p>Short URL is : http://localhost:8000/url/<%= locals.shortUrl %></p>
+        <% } %>
+      </form>
+    </div>
   </body>
 </html>

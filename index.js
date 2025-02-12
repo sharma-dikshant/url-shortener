@@ -25,6 +25,7 @@ connectToDB("mongodb://127.0.0.1:27017/url-shortener")
   .catch((err) => console.log(err));
 
 app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 app.use("/url", urlRouter);
 app.use("/", homeRouter);
 
