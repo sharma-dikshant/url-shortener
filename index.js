@@ -1,12 +1,19 @@
 const express = require("express");
+const path = require("path");
 const { connectToDB } = require("./configDB");
 
 //routers
 const urlRouter = require("./routes/urlRouters");
+const homeRouter = require("./routes/HomeRouter");
 const URL = require("./models/urlModel");
 
 const app = express();
 const PORT = 8000;
+
+//setting ejs as view engine
+app.set("view engine", "ejs");
+//setting views directory
+app.set("views", path.resolve("./views"));
 
 connectToDB("mongodb://127.0.0.1:27017/url-shortener")
   .then(() => {
@@ -19,24 +26,8 @@ connectToDB("mongodb://127.0.0.1:27017/url-shortener")
 
 app.use(express.json());
 app.use("/url", urlRouter);
+app.use("/", homeRouter);
 
-// //dynamic route for redirect
-// app.get("/:shortId", async (req, res) => {
-//   const shortId = req.params.shortId;
-//   console.log(shortId);
-//   const entry = await URL.findOneAndUpdate(
-//     {
-//       shortId,
-//     },
-//     {
-//       $push: {
-//         visitedHistory: { timestamp: Date.now() },
-//       },
-//     }
-//   );
-//   console.log(entry);
-//   res.redirect(entry.redirectURL);
-// });
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
